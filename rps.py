@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter.font as font
+import random
 
 root=Tk()
 root.geometry("1000x500")
@@ -31,6 +32,37 @@ def tie():
     aiscore_label.config(text="🤖 score: "+str(computer_score))
 
 
+def get_computer_choice():
+    return random.choice(options)
+
+def get_player_choice(player_input):
+    global computer_score,player_score
+    computer_input=get_computer_choice()
+    playerchoice_label.config(text="🧑 choice: "+player_input[0])
+    aichoice_label.config(text="🤖 choice: "+computer_input[0])
+
+    if(player_input==computer_input):
+        tie()
+
+    if(player_input[1]==0):
+        if(computer_input[1]==1):
+            aiwins()
+        elif(computer_input[1]==2):
+            playerwins()
+
+    elif(player_input[1]==1):
+        if(computer_input[1]==0):
+            playerwins()
+        elif(computer_input[1]==2):
+            aiwins()
+
+    elif(player_input[1]==2):
+        if(computer_input[1]==0):
+            aiwins()
+        elif(computer_input[1]==1):
+            playerwins()
+    
+
 app_font=font.Font(size=16)
 
 rps_label=Label(text="Rock, paper and scissors!!",font=font.Font(size=40),fg="black",bg="white")
@@ -45,13 +77,13 @@ input_frame.pack()
 playopt_label=Label(input_frame,text="🧑 options: ",font=app_font,fg="gray",bg="white")
 playopt_label.grid(row=0,column=0,pady=8)
 
-rock_button=Button(input_frame,text="🪨",width=15,bd=0,bg="pink",pady=5)
+rock_button=Button(input_frame,text="🪨",width=15,bd=0,bg="pink",pady=5,command=lambda:get_player_choice(options[0]))
 rock_button.grid(row=1,column=1,padx=8,pady=5)
 
-paper_button=Button(input_frame,text="📄",width=15,bd=0,bg="pink",pady=5)
+paper_button=Button(input_frame,text="📄",width=15,bd=0,bg="pink",pady=5,command=lambda:get_player_choice(options[1]))
 paper_button.grid(row=1,column=2,padx=8,pady=5)
 
-scissor_button=Button(input_frame,text="✂️",width=15,bd=0,bg="pink",pady=5)
+scissor_button=Button(input_frame,text="✂️",width=15,bd=0,bg="pink",pady=5,command=lambda:get_player_choice(options[2]))
 scissor_button.grid(row=1,column=3,padx=8,pady=5)
 
 score_label=Label(input_frame,text="Score: ",font=app_font,fg="gray",bg="white")
